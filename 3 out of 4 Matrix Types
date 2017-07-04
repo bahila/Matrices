@@ -1,0 +1,138 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace Matrices
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            int n = int.Parse(Console.ReadLine());
+            char matrixType = char.Parse(Console.ReadLine());
+            int[,] matrix = new int[n, n];
+            int number = 1;
+            switch(matrixType)
+            {
+                case 'a':
+                    VerticalMatrixA(n, matrix);
+                    break;
+                case 'b':
+					VerticalMatrixB(n, matrix);
+                    break;
+                case 'c':
+					DiagonalMatrix(n, matrix);
+                    break;
+                case 'd':
+
+                    break;
+            }
+            PrintMatrix(matrix);
+        }
+
+        public static void VerticalMatrixA(int n, int[,] matrix)
+        {
+            int number = 1;
+            for (int cols = 0; cols < matrix.GetLength(1); cols++)
+            {
+                for (int rows = 0; rows < matrix.GetLength(0); rows++)
+                {
+                    matrix[rows, cols] = number++;
+                    
+                }
+            }
+
+        }
+		
+		public static void VerticalMatrixB(int n, int[,] matrix)
+		{
+			int number = 1;
+			for (int cols = 0; cols < matrix.GetLength(1); cols++)
+			{
+				if (cols % 2 == 0)
+				{
+					for (int rows = 0; rows < matrix.GetLength(0); rows++)
+					{
+						matrix[rows, cols] = number++;
+					}
+					
+				}
+				else
+				{
+					for (int rows = n - 1; rows > -1; rows--)
+					{
+						matrix[rows, cols]= number++;
+					}
+				}
+			}
+			
+		}
+		
+		public static void DiagonalMatrix(int n, int[,] matrix)
+        {
+            int number = 1;
+            int CurrentElements = 1;
+            int cols = 0;
+            int rows = 0;
+            for (int diagonal = n - 1; diagonal > -1; diagonal--)
+            {
+				rows = diagonal;
+                cols = 0;
+                for (int elements = 0; elements < CurrentElements; elements++)
+                {
+                    matrix[rows, cols] = number++;
+
+                    rows++;
+                    cols++;
+                    
+                }
+                CurrentElements++;
+            }
+			for (int diagonal = 1; diagonal < n; diagonal++)
+			{
+				cols = diagonal;
+				rows = 0;
+				
+				CurrentElements--;
+				for (int elements = 0; elements < CurrentElements - 1; elements++)
+				{
+					matrix[rows, cols] = number++;
+					
+					rows++;
+					cols++;
+				}
+			}
+		}
+		
+        public static void PrintMatrix(int[,] matrix)
+        {
+            for (int rows = 0; rows < matrix.GetLength(0); rows++)
+            {
+                for (int cols = 0; cols < matrix.GetLength(1); cols++)
+                {
+                    Console.Write("{0} ", matrix[rows, cols]);
+                }
+				Console.WriteLine();
+            }
+        }
+    }
+}
+
+//for (int diagonals = dimensions - 1; diagonals >= 0; diagonals--)
+//        {
+//            diagonalX = diagonals;
+//            diagonalY = 0;
+
+//            for (int diagonalElements = 0; diagonalElements<currentDiagonalElements; diagonalElements++)
+//            {
+//                matrix[diagonalX, diagonalY] = counter;
+//                counter++;
+//                diagonalX++;
+//                diagonalY++;
+//            }
+
+//            currentDiagonalElements++;
+//        }
